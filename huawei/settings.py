@@ -37,7 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'App.apps.AppConfig',
-    'tinymce'
+    'cart',
+    'order',
+    'product',
+    'user',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -69,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'day6.wsgi.application'
+WSGI_APPLICATION = 'huawei.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -77,11 +81,11 @@ WSGI_APPLICATION = 'day6.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'forum1',
+        'NAME': 'huawei',
         'HOST': '127.0.0.1',
         'USER': 'root',
         'PASSWORD': '123456',
-        'PORT': 3306
+        'PORT': 3306,
     }
 }
 
@@ -126,10 +130,10 @@ STATICFILES_DIRS = [
 ]
 
 # 应该使用我们自己的User进行认证
-AUTH_USER_MODEL = 'App.User'
+AUTH_USER_MODEL = 'user.User'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/upload')
-
+# 富文本编辑框
 TINYMCE_DEFAULT_CONFIG = {
     'theme': 'advanced',
     'width': 600,
