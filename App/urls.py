@@ -4,5 +4,7 @@ from App import views
 
 urlpatterns = [
 
-    url(r'^$', views.index, name='index'),
+
+    url(r'^admin/(?P<action>\w+)/$', views.AdminView.as_view(), name='admin'),
+
 ]

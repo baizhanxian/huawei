@@ -9,7 +9,7 @@ from db.base_model import BaseModel
 # 商品模型类SPU
 class Products(BaseModel):
     name = models.CharField(max_length=20, verbose_name='商品SPU名称')
-    detail = HTMLField(blank=True, verbose_name='商品详情')
+    detail = models.CharField(max_length=128,blank=True, verbose_name='商品详情')
 
     class Meta:
         managed = True
@@ -46,7 +46,7 @@ class ProductSKU(BaseModel):
     desc = models.CharField(max_length=100, verbose_name='商品简介')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='商品价格')
     unite = models.CharField(max_length=20, verbose_name='单位')
-    image = models.ImageField(upload_to='products', verbose_name='商品图片')
+    image = models.CharField(max_length=128, verbose_name='商品图片')
     inventory = models.IntegerField(default=1, verbose_name='库存')
     sales = models.IntegerField(default=0, verbose_name='销量')
     status = models.SmallIntegerField(default=1, choices=PRODUCT_STATUS, verbose_name='商品状态')

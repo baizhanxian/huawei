@@ -42,13 +42,14 @@ INSTALLED_APPS = [
     'product',
     'user',
     'tinymce',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -82,6 +83,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'huawei',
+        # 'HOST': '49.232.42.221',
         'HOST': '127.0.0.1',
         'USER': 'root',
         'PASSWORD': '123456',
@@ -139,4 +141,11 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 600,
     'height': 400,
 
+}
+# 缓存
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',  # 指定缓存类型redis缓存
+        'LOCATION': 'redis://127.0.0.1:6379/10',  # 没密码
+    }
 }

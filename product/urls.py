@@ -1,7 +1,8 @@
 from django.conf.urls import url
 
-from . import views
+from product import views
 
 urlpatterns = [
+    url(r'^product/$',views.ProductAPIView.as_view(),name='product')
 
 ]

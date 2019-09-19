@@ -16,8 +16,14 @@ class Third_app(BaseModel):
     app_id = models.CharField(max_length=64, null=False, verbose_name='应用AppID')
     app_secret = models.CharField(max_length=64, null=False, verbose_name='应用App密钥')
     app_description = models.CharField(max_length=100, verbose_name='应用App描述')
+    # type = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'third_app'
         verbose_name = '应用App'
         verbose_name_plural = verbose_name
+
+    @classmethod
+    def validate_password(cls, app_id, app_secret):
+
+        return cls.objects.filter(app_id=app_id, app_secret=app_secret).exists()

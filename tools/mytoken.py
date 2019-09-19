@@ -1,7 +1,8 @@
-from itsdangerous import URLSafeTimedSerializer as utsr
 import base64
-import re
-from django.conf import settings as django_settings
+
+from itsdangerous import URLSafeTimedSerializer as utsr
+
+
 class Token:
     def __init__(self, security_key):
         self.security_key = security_key

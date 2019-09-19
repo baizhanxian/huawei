@@ -32,6 +32,52 @@
 			
 		});
 	})(jQuery);
+
+    $.ajax({
+        url: "http://127.0.0.1:8000/userlist/",
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (data, status) {
+            console.log(data);
+            var content = '';
+            for (var i = 0; i < data.length; i++) {
+                var info = data[i].info[0];
+                content += " <tr><td class='center'>" + data[i].id + "</td>";
+                content += " <td class='center'><img src='upload/user_002.png' width='50' height='50'/></td>\n";
+                content += " <td>" + data[i].username + "</td>\n";
+                //if (info) content +=" <td class='center'>"+info.mobile+"</td>\n"
+                content += " <td class='center'>" + info.mobile + "</td>\n";
+                content += " <td class='center'>" + info.email + "</td>\n";
+                content += " <td class='center'>" + info.realname + "</td>\n";
+                content += " <td class='center'>" + info.vip + "</td>\n";
+                content += " <td class='center'>" + info.province + "," + info.city + "," + info.country + "</td>\n";
+                content += " <td class='center'>" + info.detail + "</td>\n";
+                content += "<td class='center'>\n" +
+                    "         <a href='user_detail.html\' title='编辑' class='link_icon'>&#101;</a>\n" +
+                    "         <a href='#' title='删除' class='link_icon' id='delete_btn'>&#100;</a>\n" +
+                    "        </td>"
+
+            }
+            $("#__userinfo").append(content);
+
+
+            $("#delete_btn").click(function () {
+
+                //$.post('/userlist/', $('table').serialize(), function (data, status) {
+                 //   console.log(data)
+
+
+                })
+
+
+            })
+
+        }
+    });
+
+
+
 </script>
 </head>
 <body>
@@ -117,19 +163,20 @@
        <input type="text" class="textbox textbox_225" placeholder="输入会员号/手机/电子邮件查询..."/>
        <input type="button" value="查询" class="group_btn"/>
       </section>
-      <table class="table">
+     <table class="table" id="__userinfo">
        <tr>
         <th>Id</th>
         <th>会员头像</th>
         <th>会员账号</th>
         <th>手机号码</th>
         <th>电子邮件</th>
-        <th>验证</th>
+           <th>真实姓名</th>
         <th>会员等级</th>
-        <th>账户余额</th>
-        <th>冻结资金</th>
+           <th>地址</th>
+           <th>详细信息</th>
         <th>操作</th>
        </tr>
+         <!--
        <tr>
         <td class="center">001</td>
         <td class="center"><img src="upload/user_002.png" width="50" height="50"/></td>
@@ -149,26 +196,8 @@
          <a href="#" title="删除" class="link_icon">&#100;</a>
         </td>
        </tr>
-       <tr>
-        <td class="center">002</td>
-        <td class="center"><img src="upload/user_001.png" width="50" height="50"/></td>
-        <td>DeathGhost02</td>
-        <td class="center">15800000000</td>
-        <td class="center">232650413@sina.cn</td>
-        <td class="center"><a title="未验证" class="link_icon">&#88;</a></td>
-        <td class="center">高级会员</td>
-        <td class="center">
-         <strong class="rmb_icon">199.00</strong>
-        </td>
-        <td class="center">
-         <strong class="rmb_icon">15.00</strong>
-        </td>
-        <td class="center">
-         <a href="user_detail.html" title="编辑" class="link_icon">&#101;</a>
-         <a href="#" title="删除" class="link_icon">&#100;</a>
-        </td>
-       </tr>
-      </table>
+         -->
+     </table>
       <aside class="paging">
        <a>第一页</a>
        <a>1</a>
