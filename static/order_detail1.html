@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>后台管理系统</title>
+<meta name="author" content="DeathGhost" />
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<!--[if lt IE 9]>
+<script src="js/html5.js"></script>
+<![endif]-->
+<script src="js/jquery.js"></script>
+<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script>
+
+	(function($){
+		$(window).load(function(){
+			
+			$("a[rel='load-content']").click(function(e){
+				e.preventDefault();
+				var url=$(this).attr("href");
+				$.get(url,function(data){
+					$(".content .mCSB_container").append(data); //load new content inside .mCSB_container
+					//scroll-to appended content 
+					$(".content").mCustomScrollbar("scrollTo","h2:last");
+				});
+			});
+			
+			$(".content").delegate("a[href='top']","click",function(e){
+				e.preventDefault();
+				$(".content").mCustomScrollbar("scrollTo",$(this).attr("href"));
+			});
+			
+		});
+	})(jQuery);
+    getOrder();
+
+    function getOrder() {
+        $.ajax({
+            url: "http://127.0.0.1:8000/getorderlist/",
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data, status) {
+                console.log(data);
+                var content = '';
+
+                    var info = data[1].info[0];
+                    var order = data[1].order[0];
+                    content += "<tr> <td>收件人：" + data[1].username + "</td>";
+                    content += "<td>联系电话：" + info.mobile + "</td>";
+                    content += "<td>收件地址：" + info.province + "" + info.city + "" + info.country + "" + info.detail + "</td>";
+                    content += "<td>付款时间：" + order.pay_time + "</td> </tr>";
+                    content += "<tr><td>下单时间：" + order.create_time + "</td>";
+                    content += "<td>付款时间：" + order.pay_time + "</td>";
+                    content += "<td>确认时间：" + order.confirm_time + "</td>";
+                    if (order.reply_time) content += "<td>评价时间：" + order.reply_time + "</td></tr>";
+                    if (order.order_status === 1)
+                        content += "<td>订单状态：<a>待支付</a></td>";
+                    else if (order.order_status === 2)
+                        content += "<td>订单状态：<a>已付款，待发货</a></td>";
+                    else if (order.order_status === 3)
+                        content += "<td>订单状态：<a>已发货，待收货</a></td>";
+                    else if (order.order_status === 4)
+                        content += "<td>订单状态：<a>已收货，待评价</a></td>";
+                    else if (order.order_status === 5)
+                        content += "<td>订单状态：<a>已完成</a></td>";
+                    content += "<td colspan='3'>订单备注：<mark>" + order.order_notes + "</mark></td>"
+
+                $('#info').append(content)
+            }
+
+        })
+    }
+
+    getOrder_products();
+
+    function getOrder_products() {
+        $.ajax({
+            url: "http://127.0.0.1:8000/orderproducts/2/",
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data, status) {
+                console.log(data);
+                var content = '';
+                for (var i = 0; i < data.length; i++) {
+                    var product = data[i].product_id.SKU[0];
+
+                    content += "<tr><td class='center'><img src='upload/goods01.jpg' width='50' height='50'/></td>";
+                    content += "<td>" + data[i].product_id.name + "</td>";
+                    content += "<td class='center'>" + product.name + "</td>";
+                    content += "<td class=\"center\"><strong class=\"rmb_icon\">" + product.price + "</strong></td>";
+                    content += "<td class='center'>" + product.desc + "</td>";
+                    content += "<td colspan='2'>" + data[i].product_id.detail + "</td>";
+                    content += "<td class='center'>" + product.unite + "</td>";
+                }
+                $('#order_products').append(content)
+            }
+
+        })
+    }
+</script>
+</head>
+<body>
+<!--header-->
+<header>
+ <h1><img src="images/admin_logo.png"/></h1>
+ <ul class="rt_nav">
+  <li><a href="http://www.aspku.com" target="_blank" class="website_icon">站点首页</a></li>
+  <li><a href="#" class="clear_icon">清除缓存</a></li>
+  <li><a href="#" class="admin_icon">DeathGhost</a></li>
+  <li><a href="#" class="set_icon">账号设置</a></li>
+  <li><a href="login.html" class="quit_icon">安全退出</a></li>
+ </ul>
+</header>
+<!--aside nav-->
+<!--aside nav-->
+<aside class="lt_aside_nav content mCustomScrollbar">
+ <h2><a href="index.html">起始页</a></h2>
+ <ul>
+  <li>
+   <dl>
+       <dt>商品详情</dt>
+    <!--当前链接则添加class:active-->
+       <dd><a href="product_list.html" class="active">商品列表</a></dd>
+       <dd><a href="product_detail.html">添加商品</a></dd>
+       <dd><a href="recycle_bin.html">商品回收站</a></dd>
+   </dl>
+  </li>
+  <li>
+   <dl>
+    <dt>订单信息</dt>
+       <dd><a href="order_list.html">订单列表</a></dd>
+
+   </dl>
+  </li>
+  <li>
+   <dl>
+    <dt>会员管理</dt>
+       <dd><a href="user_list.html">会员列表</a></dd>
+       <dd><a href="user_detail.html">添加会员（详情）</a></dd>
+
+   </dl>
+  </li>
+
+  <li>
+   <p class="btm_infor">© DeathGhost.cn 版权所有</p>
+  </li>
+ </ul>
+</aside>
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">订单详情示例</h2>
+      </div>
+     <table class="table" id="info">
+
+     </table>
+     <table class="table" id="order_products">
+
+      </table>
+
+ </div>
+</section>
+</body>
+</html>
