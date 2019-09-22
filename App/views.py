@@ -8,6 +8,7 @@ from App.models import Third_app
 from App.serializers import Third_appSerializer
 from huawei.settings import SECRET_KEY
 from tools.mytoken import Token
+from user.models import User
 
 
 class ExampleView(ListModelMixin,
@@ -27,7 +28,7 @@ class ExampleView(ListModelMixin,
     def create(self, request, *args, **kwargs):
         super().create(request, *args, **kwargs)
         return Response({
-            'status': 1,
+            'code': 1,
             'msg': '创建成功'
         })
 
@@ -38,17 +39,18 @@ class ExampleView(ListModelMixin,
         # print(kwargs)
         self.destroy(request, *args, **kwargs)
         return Response({
-            'status': 1,
+            'code': 1,
             'msg': '删除成功'
         })
+
 
     def get_object(self):
         print(self.lookup_field, self.kwargs)
         print(self.request.query_params)
         if self.lookup_field in self.kwargs:
-            return Third_app.objects.get(pk=int(self.kwargs[self.lookup_field]))
+            return User.objects.get(pk=int(self.kwargs[self.lookup_field]))
         elif 'pk' in self.request.query_params:
-            return Third_app.objects.get(pk=int(self.request.query_params['pk']))
+            return User.objects.get(pk=int(self.request.query_params['pk']))
         raise Exception("无法获取到正确的请求参数")
 
 
@@ -71,7 +73,7 @@ class AdminView(CreateAPIView):
             raise Exception("action没有值")
 
     def register(self, request, *args, **kwargs):
-        self.post(request, *args, **kwargs)
+        super().post(request, *args, **kwargs)
         return Response({
             'code': 1,
             'msg': '注册成功'

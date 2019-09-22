@@ -32,6 +32,50 @@
 			
 		});
 	})(jQuery);
+
+    function addProduct() {
+        var name = $('#name1').val();
+        var detail = $('#detail').val();
+        var pname = $('#pname').val();
+        var desc = $('#desc').val();
+        var price = $('#price').val();
+        var unite = $('#unite').val();
+        var inventory = $('#inventory').val();
+        var sales = $('#sales').val();
+        var status = $('#status').val();
+
+        $.ajax({
+            url: 'http://127.0.0.1:8000/addproduct/',
+            type: 'POST',
+            data: JSON.stringify({
+                name: name,
+                detail: detail,
+                SKU: {
+                    name: pname,
+                    desc: desc,
+                    price: price,
+                    unite: unite,
+                    inventory: inventory,
+                    sales: sales,
+                    status: status,
+                },
+
+            }),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data, status) {
+
+                if (status === 'success' && data.code === 1) {
+                    alert('add success' + data.msg);
+                    window.location.href = 'product_list.html'
+                } else {
+                    alert('add error' + data.message)
+                }
+            }
+        })
+
+    }
+
 </script>
 </head>
 <body>
@@ -53,49 +97,28 @@
  <ul>
   <li>
    <dl>
-    <dt>常用布局示例</dt>
+    <dt>商品详情</dt>
     <!--当前链接则添加class:active-->
-    <dd><a href="product_list.html" class="active">商品列表示例</a></dd>
-    <dd><a href="product_detail.html">商品详情示例</a></dd>
-    <dd><a href="recycle_bin.html">商品回收站示例</a></dd>
+    <dd><a href="product_list.html" class="active">商品列表</a></dd>
+    <dd><a href="product_detail.html">添加商品</a></dd>
+    <dd><a href="recycle_bin.html">商品回收站</a></dd>
    </dl>
   </li>
   <li>
    <dl>
     <dt>订单信息</dt>
-    <dd><a href="order_list.html">订单列表示例</a></dd>
-    <dd><a href="order_detail.html">订单详情示例</a></dd>
+    <dd><a href="order_list.html">订单列表</a></dd>
    </dl>
   </li>
   <li>
    <dl>
     <dt>会员管理</dt>
-    <dd><a href="user_list.html">会员列表示例</a></dd>
-    <dd><a href="user_detail.html">添加会员（详情）示例</a></dd>
-    <dd><a href="user_rank.html">会员等级示例</a></dd>
-    <dd><a href="adjust_funding.html">会员资金管理示例</a></dd>
+    <dd><a href="user_list.html">会员列表</a></dd>
+    <dd><a href="user_detail.html">添加会员（详情）</a></dd>
+
    </dl>
   </li>
-  <li>
-   <dl>
-    <dt>基础设置</dt>
-    <dd><a href="setting.html">站点基础设置示例</a></dd>
-   </dl>
-  </li>
-  <li>
-   <dl>
-    <dt>配送与支付设置</dt>
-    <dd><a href="express_list.html">配送方式</a></dd>
-    <dd><a href="pay_list.html">支付方式</a></dd>
-   </dl>
-  </li>
-  <li>
-   <dl>
-    <dt>在线统计</dt>
-    <dd><a href="discharge_statistic.html">流量统计</a></dd>
-    <dd><a href="sales_volume.html">销售额统计</a></dd>
-   </dl>
-  </li>
+
   <li>
    <p class="btm_infor">© DeathGhost.cn 版权所有</p>
   </li>
@@ -105,86 +128,113 @@
 <section class="rt_wrap content mCustomScrollbar">
  <div class="rt_content">
       <div class="page_title">
-       <h2 class="fl">商品详情示例</h2>
-       <a class="fr top_rt_btn">返回产品列表</a>
+       <h2 class="fl">商品详情</h2>
+       <a class="fr top_rt_btn" href="product_list.html">返回产品列表</a>
       </div>
      <section>
       <ul class="ulColumn2">
        <li>
-        <span class="item_name" style="width:120px;">商品名称：</span>
-        <input type="text" class="textbox textbox_295" placeholder="商品名称..."/>
-        <span class="errorTips">错误提示信息...</span>
+           <span class="item_name" id="name" style="width:120px;">商品名称：</span>
+           <input type="text" class="textbox textbox_295" id="name1" placeholder="商品名称..."/>
+
        </li>
        <li>
-        <span class="item_name" style="width:120px;">商品货号：</span>
-        <input type="text" class="textbox" placeholder="商品货号..."/>
-        <span class="errorTips">错误提示信息...</span>
+           <span class="item_name" style="width:120px;">商品SKU：</span>
+           <input type="text" class="textbox" id="pname" placeholder="商品SKU..."/>
+
        </li>
        <li>
-        <span class="item_name" style="width:120px;">品牌：</span>
-        <select class="select">
-         <option>选择品牌</option>
+           <span class="item_name" style="width:120px;">颜色：</span>
+           <select class="select" id="desc">
+               <option>选择颜色</option>
+               <option>金色</option>
+               <option>银色</option>
+               <option>黑色</option>
+               <option>紫色</option>
+               <option>绿色</option>
         </select>
-        <span class="errorTips">错误提示信息...</span>
+
        </li>
+          <li>
+              <span class="item_name" style="width:120px;">价格：</span>
+              <input type="text" class="textbox" id="price" placeholder="商品价格..."/>
+
+          </li>
        <li>
-        <span class="item_name" style="width:120px;">分类：</span>
-        <select class="select">
-         <option>选择产品分类</option>
+           <span class="item_name" style="width:120px;">单位：</span>
+           <select id="unite" class="select">
+               <option>选择产品单位</option>
+               <option>台</option>
+               <option>个</option>
+               <option>包</option>
+               <option>盒</option>
         </select>
-        <span class="errorTips">错误提示信息...</span>
+
        </li>
+           <li>
+              <span class="item_name" style="width:120px;">库存数量：</span>
+              <input type="text" class="textbox" id="inventory" placeholder="库存数量..."/>
+
+          </li>
        <li>
-        <span class="item_name" style="width:120px;">推荐：</span>
-        <label class="single_selection"><input type="radio" name="name"/>是否精品</label>
-        <label class="single_selection"><input type="radio" name="name"/>是否热销</label>
-        <label class="single_selection"><input type="radio" name="name"/>是否新品</label>
+           <span class="item_name" style="width:120px;">是否上架：</span>
+           <select class="select" id="status">
+               <option>选择状态</option>
+               <option>1</option>
+               <option>0</option>
+
+           </select>
+           <span class="errorTips">1：上架， 0：下架</span>
        </li>
        <li>
         <span class="item_name" style="width:120px;">上传图片：</span>
         <label class="uploadImg">
-         <input type="file"/>
-         <span>上传图片</span>
+            <input type="file"/><img src='upload/goods01.jpg' width='50' height='50'/>
+
         </label>
        </li>
        <li>
         <span class="item_name" style="width:120px;">产品详情：</span>
-        <script id="editor" type="text/plain" style="width:1024px;height:500px;margin-left:120px;margin-top:0;"></script>
-           <!--ueditor可删除下列信息-->
-           <div id="btns" style="margin-left:120px;margin-top:8px;">
-            <div>
-                <button onclick="getAllHtml()">获得整个html的内容</button>
-                <button onclick="getContent()">获得内容</button>
-                <button onclick="setContent()">写入内容</button>
-                <button onclick="setContent(true)">追加内容</button>
-                <button onclick="getContentTxt()">获得纯文本</button>
-                <button onclick="getPlainTxt()">获得带格式的纯文本</button>
-                <button onclick="hasContent()">判断是否有内容</button>
-                <button onclick="setFocus()">使编辑器获得焦点</button>
-                <button onmousedown="isFocus(event)">编辑器是否获得焦点</button>
-                <button onmousedown="setblur(event)" >编辑器失去焦点</button>
-        
-            </div>
-            <div>
-                <button onclick="getText()">获得当前选中的文本</button>
-                <button onclick="insertHtml()">插入给定的内容</button>
-                <button id="enable" onclick="setEnabled()">可以编辑</button>
-                <button onclick="setDisabled()">不可编辑</button>
-                <button onclick=" UE.getEditor('editor').setHide()">隐藏编辑器</button>
-                <button onclick=" UE.getEditor('editor').setShow()">显示编辑器</button>
-                <button onclick=" UE.getEditor('editor').setHeight(300)">设置高度为300默认关闭了自动长高</button>
-            </div>
-        
-            <div>
-                <button onclick="getLocalData()" >获取草稿箱内容</button>
-                <button onclick="clearLocalData()" >清空草稿箱</button>
-            </div>
-        
-        </div>
+           <input type="text" class="textbox textbox_295" id="detail" placeholder="产品详情描述..."/>
+           <!--ueditor可删除下列信息
+
+<script id="editor" type="text/plain" style="width:1024px;height:500px;margin-left:120px;margin-top:0;"></script>
+<div id="btns" style="margin-left:120px;margin-top:8px;">
+ <div>
+     <button onclick="getAllHtml()">获得整个html的内容</button>
+     <button onclick="getContent()">获得内容</button>
+     <button onclick="setContent()">写入内容</button>
+     <button onclick="setContent(true)">追加内容</button>
+     <button onclick="getContentTxt()">获得纯文本</button>
+     <button onclick="getPlainTxt()">获得带格式的纯文本</button>
+     <button onclick="hasContent()">判断是否有内容</button>
+     <button onclick="setFocus()">使编辑器获得焦点</button>
+     <button onmousedown="isFocus(event)">编辑器是否获得焦点</button>
+     <button onmousedown="setblur(event)" >编辑器失去焦点</button>
+
+ </div>
+ <div>
+     <button onclick="getText()">获得当前选中的文本</button>
+     <button onclick="insertHtml()">插入给定的内容</button>
+     <button id="enable" onclick="setEnabled()">可以编辑</button>
+     <button onclick="setDisabled()">不可编辑</button>
+     <button onclick=" UE.getEditor('editor').setHide()">隐藏编辑器</button>
+     <button onclick=" UE.getEditor('editor').setShow()">显示编辑器</button>
+     <button onclick=" UE.getEditor('editor').setHeight(300)">设置高度为300默认关闭了自动长高</button>
+ </div>
+
+ <div>
+     <button onclick="getLocalData()" >获取草稿箱内容</button>
+     <button onclick="clearLocalData()" >清空草稿箱</button>
+ </div>
+
+</div>
+-->
        </li>
        <li>
         <span class="item_name" style="width:120px;"></span>
-        <input type="submit" class="link_btn"/>
+           <button type="submit" class="link_btn" onclick="addProduct()">提交</button>
+
        </li>
       </ul>
      </section>

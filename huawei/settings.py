@@ -143,9 +143,9 @@ TINYMCE_DEFAULT_CONFIG = {
 
 }
 # 缓存
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',  # 指定缓存类型redis缓存
-        'LOCATION': 'redis://127.0.0.1:6379/10',  # 没密码
-    }
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',  # 指定缓存类型redis缓存
+#         'LOCATION': 'redis://127.0.0.1:6379/10',  # 没密码
+#     }
+# }

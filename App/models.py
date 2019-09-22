@@ -13,9 +13,10 @@ from db.base_model import BaseModel
 
 
 class Third_app(BaseModel):
-    app_id = models.CharField(max_length=64, null=False, verbose_name='应用AppID')
+    app_id = models.CharField(max_length=64, null=False, verbose_name='应用AppID', unique=True)
     app_secret = models.CharField(max_length=64, null=False, verbose_name='应用App密钥')
-    app_description = models.CharField(max_length=100, verbose_name='应用App描述')
+
+    # app_description = models.CharField(max_length=100, verbose_name='应用App描述',blank=True)
     # type = models.IntegerField(default=0)
 
     class Meta:

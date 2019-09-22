@@ -8,6 +8,7 @@
 <style>
 body{height:100%;background:#16a085;overflow:hidden;}
 canvas{z-index:-1;position:absolute;}
+
 </style>
 <script src="js/jquery.js"></script>
 <script src="js/verificationNumbers.js"></script>
@@ -25,7 +26,7 @@ $(document).ready(function() {
   $(".submit_btn").click(function(){
 
       $.post('/app/admin/login/', $('form').serialize(), function (data, status) {
-          console.log(status, 'status')
+          console.log(status, 'status');
           if (status === 'success' && data.code === 1) {
               //alert('success')
               window.location.href = 'index.html' //跳转的url
@@ -49,6 +50,7 @@ $(document).ready(function() {
  <dt>
   <strong>站点后台管理系统</strong>
   <em>Management System</em>
+     <a href="register.html" >立即注册</a>
  </dt>
  <dd class="user_icon">
      <input type="text" placeholder="账号" class="login_txtbx" name="username"/>

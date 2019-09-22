@@ -1,9 +1,9 @@
 from django.db import models
 
-# Create your models here.
-from tinymce.models import HTMLField
-
 from db.base_model import BaseModel
+
+
+# Create your models here.
 
 
 # 商品模型类SPU
@@ -22,18 +22,18 @@ class Products(BaseModel):
 
 
 # 商品类型类
-class ProductCategory(BaseModel):
-    category_name = models.CharField(max_length=20, verbose_name='分类名称')
-    image = models.ImageField(upload_to='category', verbose_name='商品类型图片')
-
-    class Meta:
-        managed = True
-        db_table = 'product_category'
-        verbose_name = '商品分类'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.category_name
+# class ProductCategory(BaseModel):
+#     category_name = models.CharField(max_length=20, verbose_name='分类名称')
+#     image = models.ImageField(upload_to='category', verbose_name='商品类型图片')
+#
+#     class Meta:
+#         managed = True
+#         db_table = 'product_category'
+#         verbose_name = '商品分类'
+#         verbose_name_plural = verbose_name
+#
+#     def __str__(self):
+#         return self.category_name
 
 
 # 商品模型类SKU
@@ -43,15 +43,15 @@ class ProductSKU(BaseModel):
         (1, '上线')
     )
     name = models.CharField(max_length=50, verbose_name='商品名称')
-    desc = models.CharField(max_length=100, verbose_name='商品简介')
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='商品价格')
-    unite = models.CharField(max_length=20, verbose_name='单位')
-    image = models.CharField(max_length=128, verbose_name='商品图片')
-    inventory = models.IntegerField(default=1, verbose_name='库存')
-    sales = models.IntegerField(default=0, verbose_name='销量')
-    status = models.SmallIntegerField(default=1, choices=PRODUCT_STATUS, verbose_name='商品状态')
-    type = models.ForeignKey(ProductCategory, verbose_name='所属分类')
-    products = models.ForeignKey(Products, verbose_name='商品SPU')
+    desc = models.CharField(max_length=100, verbose_name='商品颜色',blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='商品价格',blank=True)
+    unite = models.CharField(max_length=20, verbose_name='单位',blank=True)
+    image = models.FileField(max_length=128, verbose_name='商品图片' ,blank=True ,null=True,upload_to='img')
+    inventory = models.IntegerField(default=1, verbose_name='库存',blank=True)
+    sales = models.IntegerField(default=0, verbose_name='销量',blank=True)
+    status = models.SmallIntegerField(default=1, choices=PRODUCT_STATUS, verbose_name='商品状态',blank=True)
+    # type = models.ForeignKey(ProductCategory, verbose_name='所属分类')
+    products = models.ForeignKey(Products,models.CASCADE, related_name='SKU', verbose_name='商品SPU')
 
     class Meta:
         managed = True

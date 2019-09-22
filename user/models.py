@@ -41,7 +41,7 @@ class User(AbstractUser, BaseModel):
 class Userinfo(BaseModel):
     realname = models.CharField(max_length=64, blank=True)
 
-    mobile = models.CharField(max_length=20)
+    mobile = models.CharField(max_length=20, blank=True)
 
     email = models.CharField(max_length=200, blank=True, null=True)
     # 头像
